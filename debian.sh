@@ -1,11 +1,11 @@
 #! /bin/sh
 # Configure your paths and filenames
 SOURCEBINPATH=.
-SOURCEBIN=awesome-wm
-SOURCESESSION=awesome.desktop
-SOURCELAUNCHER=awesome.desktop
+SOURCEBIN=svirfneblin-panel
+SOURCESESSION=awesome-svirfneblin.desktop
+SOURCELAUNCHER=awesome-svirfneblin.desktop
 SOURCEDOC=README.md
-DEBFOLDER=awesome-lightdm-session
+DEBFOLDER=svirfneblin-panel
 
 DEBVERSION=$(date +%Y%m%d)
 
@@ -41,6 +41,8 @@ mv debian/rules.new debian/rules
 echo usr/bin/$SOURCEBIN usr/bin > debian/install 
 echo usr/share/applications/$SOURCELAUNCH usr/share/applications >> debian/install 
 echo usr/share/xsessions/$SOURCESESSION usr/share/xsessions >> debian/install 
+echo etc/xdg/svirfneblin/rc.lua etc/xdg/svirfneblin/rc.lua >> debian/install
+echo etc/xdg/svirfneblin/debian/menu.lua etc/xdg/svirfneblin/debian/menu.lua >> debian/install
 echo usr/share/doc/$DEBFOLDER/$SOURCEDOC usr/share/doc/$DEBFOLDER >> debian/install
 
 echo "Source: $DEBFOLDER

@@ -4,5 +4,5 @@ Name=awesome
 Comment=Highly configurable framework window manager
 NoDisplay=false
 TryExec=awesome
-Exec=awesome
+Exec=awesome-svirfneblin
 Type=Application

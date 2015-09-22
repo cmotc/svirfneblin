@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=awesome
+Name=Svirfneblin
 Comment=Highly configurable framework window manager
 NoDisplay=false
 TryExec=awesome
-Exec=awesome
+Exec=awesome-svirfneblin
 Type=Application

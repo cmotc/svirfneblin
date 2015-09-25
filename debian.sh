@@ -57,7 +57,7 @@ Homepage: <insert the upstream URL, if relevant>
 
 Package: $DEBFOLDER
 Architecture: all
-Depends: lightdm (>= 3.0), lighdm-gtk-greeter, awesome (>= 3.4), \${misc:Depends}
+Depends: lightdm (>= 1.0), lighdm-gtk-greeter, awesome (>= 3.4), \${misc:Depends}
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 " > debian/control

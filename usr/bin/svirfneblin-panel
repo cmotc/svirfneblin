@@ -3,25 +3,25 @@ HOME_CONFIG_AWESOME_XDG_SVIRFNEBLIN="$XDG_CONFIG_HOME/.config/svirfneblin/rc.lua
 HOME_CONFIG_AWESOME_SVIRFNEBLIN="$HOME/.config/svirfneblin/rc.lua"
 SYSTEM_CONFIG_AWESOME_SVIRFNEBLIN="$XDG_CONFIG_DIRS/svirfneblin/rc.lua"
 
-AWESOME_SVIRFNEBLIN_CONFIG="
-
-
-
-"
-
 if [ -f "$HOME_CONFIG_XDG" ]; then
-    awesome --config "$HOME_CONFIG_AWESOME_XDG_SVIRFNEBLIN" "$@" &
+    awesome --check --config "$HOME_CONFIG_AWESOME_XDG_SVIRFNEBLIN" "$@" &
 elif [ -f "$HOME_AWESOME_CONFIG_SVIRFNEBLIN" ]; then
-    awesome --config "$HOME_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
+    awesome --check --config "$HOME_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
 elif [ -f "$SYSTEM_AWESOME_CONFIG_SVIRFNEBLIN" ]; then
-	awesome --config "$SYSTEM_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
+	awesome --check --config "$SYSTEM_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
 else
 	if [ -n XDG_CONFIG_HOME ]; then
 		echo "svirfneblin rc.lua not detected, emitting configuration
 		into ~/.config/svirfneblin"
+		rm -rf "$XDG_CONFIG_HOME/.config/svirfneblin"
+		cp -R /etc/xdg/svirfneblin/ $XDG_CONFIG_HOME/.config/svirfneblin
+		awesome --check --config "$HOME_CONFIG_AWESOME_XDG_SVIRFNEBLIN" "$@" &
 	elif [ -n HOME ]; then
 		echo "svirfneblin rc.lua not detected, emitting configuration
 		into ~/.config/svirfneblin"
+		rm -rf $HOME/.config/svirfneblin
+		cp -R /etc/xdg/svirfneblin/ "$HOME/.config/svirfneblin/rc.lua"
+		awesome --check --config "$HOME_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
 	else
 		echo "svirfneblin rc.lua not detected, emitting configuration
 		into home directory not possible. Launching fallback wm."

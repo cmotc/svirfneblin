@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=awesome
-Comment=Highly configurable framework window manager
+Name=svirfneblin
+Comment=Gnome3-Like Awesome WM configuration.
 NoDisplay=false
 TryExec=awesome
 Exec=awesome-svirfneblin

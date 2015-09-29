@@ -48,18 +48,28 @@ echo usr/share/doc/$DEBFOLDER/$SOURCEDOC usr/share/doc/$DEBFOLDER >> debian/inst
 echo "Source: $DEBFOLDER
 Section: unknown
 Priority: optional
-Maintainer: dyngar-m <dyngar-m@dyngar.local>
+Maintainer: cmotc <cmotc@openmailbox.org>
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.5
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://anonscm.debian.org/collab-maint/debian-awesome-gnome.git
-#Vcs-Browser: http://anonscm.debian.org/?p=collab-maint/debian-awesome-gnome.git;a=summary
+Homepage: https://www.github.com/svirfneblin-panel
+#Vcs-Git: git@github.com:cmotc/svirfneblin-panel
+#Vcs-Browser: https://www.github.com/cmotc/svirvneblin-panel
 
 Package: $DEBFOLDER
 Architecture: all
-Depends: lightdm (>= 1.0), lighdm-gtk-greeter, awesome (>= 3.4), \${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: lightdm, lightdm-gtk-greeter, awesome (>= 3.4), \${misc:Depends}
+Description: A Gnome3-Like configuration for Awesome WM
+ I like Gnome3's appearance, but I want tiling and I hate ShellShape, 
+ and I don't think I really need  all these graphical configuration 
+ tools, and I really don't think I need any more javascript in my life
+ than absolutely necessary. Seriously guy's, this is getting out of 
+ hand. Maybe it's not my place, but I'm just sayin'. Well technically
+ not just sayin'. I'm doin', as in re-implementing this stuff I like
+ about Gnome in a language that doesn't make me seasick to look at.
+ .
+ This package contains the custom configuration, session, and a laucher
+ which checks for the correct config without touching the default
+ Awesome WM config for Debian, which is treated as a fallback.
 " > debian/control
 
 #echo "gsettings set org.gnome.desktop.session session-name awesome-gnome
@@ -72,4 +82,4 @@ rm debian/*.EX
 
 # Build the package.
 # You  will get a lot of warnings and ../somescripts_0.1-1_i386.deb
-debuild -us -uc > ../log 
+debuild -us -uc >> ../log

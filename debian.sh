@@ -2,8 +2,6 @@
 # Configure your paths and filenames
 SOURCEBINPATH=.
 SOURCEBIN=svirfneblin-panel
-SOURCESESSION=awesome-svirfneblin.desktop
-SOURCELAUNCHER=awesome-svirfneblin.desktop
 SOURCEDOC=README.md
 DEBFOLDER=svirfneblin-panel
 
@@ -39,8 +37,6 @@ mv debian/rules.new debian/rules
 # debian/install must contain the list of scripts to install 
 # as well as the target directory
 echo usr/bin/$SOURCEBIN usr/bin > debian/install 
-echo usr/share/applications/$SOURCELAUNCH usr/share/applications >> debian/install 
-echo usr/share/xsessions/$SOURCESESSION usr/share/xsessions >> debian/install 
 echo etc/xdg/svirfneblin/rc.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/debian/menu.lua etc/xdg/svirfneblin/debian/ >> debian/install
 echo usr/share/doc/$DEBFOLDER/$SOURCEDOC usr/share/doc/$DEBFOLDER >> debian/install

@@ -16,7 +16,7 @@ elif [ -f "$SYSTEM_CONFIG_AWESOME_SVIRFNEBLIN" ]; then
     compton &
     awesome-wm --check --config "$SYSTEM_CONFIG_AWESOME_SVIRFNEBLIN" "$@" &
 else
-	if [ -n XDG_CONFIG_HOME ]; then
+	if [ -n "$XDG_CONFIG_HOME" ]; then
 		echo "svirfneblin rc.lua not detected, emitting configuration
 		into ~/.config/svirfneblin"
 		rm -rf "$XDG_CONFIG_HOME/.config/svirfneblin"
@@ -24,7 +24,7 @@ else
 		cp -R /etc/xdg/svirfneblin/ $XDG_CONFIG_HOME/.config/svirfneblin
 		compton &
 		awesome-wm --check --config "$HOME_CONFIG_AWESOME_XDG_SVIRFNEBLIN" "$@" &
-	elif [ -n HOME ]; then
+	elif [ -n "$HOME" ]; then
 		echo "svirfneblin rc.lua not detected, emitting configuration
 		into ~/.config/svirfneblin"
 		rm -rf $HOME/.config/svirfneblin

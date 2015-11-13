@@ -121,15 +121,15 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 require("battery.batt")
 
-batterywidget = wibox.widget.textbox()
-batterywidget:set_align("right")
+mybatterywidget = wibox.widget.textbox()
+mybatterywidget:set_align("right")
 
 bat_clo = battery.batclosure("BAT1")
-batterywidget:set_text(bat_clo())
+mybatterywidget:set_text(bat_clo())
 
 battimer = timer({ timeout = 30 })
 battimer:connect_signal("timeout", function() 
-    batterywidget:set_text(bat_clo()) end)
+    mybatterywidget:set_text(bat_clo()) end)
 battimer:start()
 
 -- Create a textclock widget
@@ -137,7 +137,7 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {
-    batterywidget
+    mybatterywidget
 }
 mypromptbox = {}
 mylayoutbox = {}
@@ -216,7 +216,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(batterywidget)
+    right_layout:add(mybatterywidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 

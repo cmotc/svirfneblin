@@ -7,11 +7,13 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
--- Overview Library
+-- Overview library
 local calladuran = require("calladuran")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+-- Battery library
+require("battery.batt")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -118,8 +120,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibox
-
-require("battery.batt")
 
 mybatterywidget = wibox.widget.textbox()
 mybatterywidget:set_align("right")

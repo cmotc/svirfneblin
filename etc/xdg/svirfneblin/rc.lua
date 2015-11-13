@@ -15,7 +15,6 @@ local menubar = require("menubar")
 
 -- Load Debian menu entries
 require("debian.menu")
-require("battery.batt")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -119,16 +118,27 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibox
+
+require("battery.batt")
+
+batterywidget = wibox.widget.textbox()
+batterywidget:set_align("right")
+
+bat_clo = battery.batclosure("BAT1")
+batterywidget:set_text(bat_clo())
+
+battimer = timer({ timeout = 30 })
+battimer:connect_signal("timeout", function() 
+    batterywidget:set_text(bat_clo()) end)
+battimer:start()
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
-battery_widget = widget({ type = "textbox" })
-
 -- Create a wibox for each screen and add it
 mywibox = {
-    battery_widget
+    batterywidget
 }
-
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -206,6 +216,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(batterywidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -460,4 +471,6 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+awful.util.spawn_with_shell("run_once conky")
 -- }}}

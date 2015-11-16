@@ -16,6 +16,8 @@ local menubar = require("menubar")
 require("battery.batt")
 -- NetworkManager library
 require("network.pech")
+-- Configure Conky-based Heads Up Display
+require("conky.hud")
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -111,6 +113,7 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "uTox", "utox" },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -145,7 +148,7 @@ end
 
 mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                             menu = mynetworkmenu()})
-nettimer = timer({ timeout = 360 })
+nettimer = timer({ timeout = 30 })
 nettimer:connect_signal("timeout", function()
         mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                                 menu = mynetworkmenu()})
@@ -264,7 +267,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-
+    awful.key({}, "Pause", function() toggle_conky() end),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -412,6 +415,13 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "Conky" },
+      properties = {
+      floating = true,
+      sticky = true,
+      ontop = false,
+      focusable = false
+    } }
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -493,5 +503,6 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+awful.util.spawn_with_shell("run_once compton")
 awful.util.spawn_with_shell("run_once conky")
 -- }}}

@@ -38,6 +38,7 @@ mv debian/rules.new debian/rules
 # as well as the target directory
 echo usr/bin/$SOURCEBIN usr/bin > debian/install 
 echo etc/xdg/svirfneblin/rc.lua etc/xdg/svirfneblin >> debian/install
+echo etc/xdg/svirfneblin/theme.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/debian/menu.lua etc/xdg/svirfneblin/debian/ >> debian/install
 echo usr/share/doc/$DEBFOLDER/$SOURCEDOC usr/share/doc/$DEBFOLDER >> debian/install
 
@@ -53,7 +54,7 @@ Homepage: https://www.github.com/svirfneblin-panel
 
 Package: $DEBFOLDER
 Architecture: all
-Depends: lightdm, lightdm-gtk-greeter, awesome (>= 3.4), \${misc:Depends}
+Depends: lightdm, lightdm-gtk-greeter, awesome (>= 3.4), svirfneblin-battery-widget, svirfneblin-network-manager, \${misc:Depends}
 Description: A Gnome3-Like configuration for Awesome WM
  I like Gnome3's appearance, but I want tiling and I hate ShellShape, 
  and I don't think I really need  all these graphical configuration 

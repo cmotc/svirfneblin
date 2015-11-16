@@ -14,7 +14,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 -- Battery library
 require("battery.batt")
-
+-- NetworkManager library
+require("network.pech")
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -45,7 +46,9 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+--beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+-- Themes define colours, icons, font and wallpapers.
+beautiful.init("/etc/xdg/svirfneblin/theme.lua")
 
 -- Initialize Overview plugin
 -- calladuran.init("","")
@@ -121,6 +124,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibox
 
+-- create a battery widget
 mybatterywidget = wibox.widget.textbox()
 mybatterywidget:set_align("right")
 
@@ -129,8 +133,24 @@ mybatterywidget:set_text(bat_clo())
 
 battimer = timer({ timeout = 30 })
 battimer:connect_signal("timeout", function() 
-    mybatterywidget:set_text(bat_clo()) end)
+        mybatterywidget:set_text(bat_clo()) 
+    end)
 battimer:start()
+
+-- create a network menu widget
+function mynetworkmenu()
+    networkmenu = awful.menu({	items = netmgr.generate_network_menu()	  })
+    return networkmenu
+end
+
+mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                            menu = mynetworkmenu()})
+nettimer = timer({ timeout = 360 })
+nettimer:connect_signal("timeout", function()
+        mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                                menu = mynetworkmenu()})
+    end)
+nettimer:start()
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -216,9 +236,10 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(mynetworklauncher)
+    right_layout:add(mylayoutbox[s])
     right_layout:add(mybatterywidget)
     right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()

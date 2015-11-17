@@ -111,9 +111,17 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
+mybrowsers = {
+   {"Iceweasel","iceweasel"},
+   {"Chromium","chromium"},
+   {"Tor Browser","torbrowser-launcher"}
+}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "uTox", "utox" },
+                                    { "Browsers", mybrowsers },
+                                    { "Text Editor", editor }
                                     { "open terminal", terminal }
                                   }
                         })

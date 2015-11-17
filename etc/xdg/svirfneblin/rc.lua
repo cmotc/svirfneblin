@@ -114,15 +114,31 @@ myawesomemenu = {
 mybrowsers = {
    {"Iceweasel","iceweasel"},
    {"Chromium","chromium"},
+--   {"Lynx", terminal .. " torsocks lynx @> /dev/null"},
    {"Tor Browser","torbrowser-launcher"}
+}
+
+mymail = {
+   {"Thunderbird", "thunderbird"},
+--   {"mutt", terminal .. " torsocks mutt @> /dev/null"}
+}
+
+mypowermanagement = {
+   { "shutdown", terminal .. " -e sudo shutdown now" },
+   { "restart", terminal .. " -e sudo shutdown -r now" },
+   { "logout", awesome.quit }
+--   { "shutdown", terminal .. " -e sudo shutdown now" }
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "uTox", "utox" },
                                     { "Browsers", mybrowsers },
-                                    { "Text Editor", editor }
-                                    { "open terminal", terminal }
+--                                    { "E-Mail", mymail},
+                                    { "uTox", "utox" },
+                                    { "Text Editor", "gedit" },
+                                    { "open terminal", terminal },
+                                    { "restart awm", awesome.restart },
+                                    { "power", mypowermanagement }
                                   }
                         })
 

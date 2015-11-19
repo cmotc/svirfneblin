@@ -130,6 +130,17 @@ mypowermanagement = {
 --   { "shutdown", terminal .. " -e sudo shutdown now" }
 }
 
+mymanager = {
+   { "Toxic", "x-terminal-emulator -e ".."toxic","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"},
+   { "logout", awesome.quit, beautiful.awesome_icon },
+   { "power", mypowermanagement }
+}
+
+mymanagermenu = awful.menu({ items = mymanager })
+
+mymanagerlauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     menu = mymanagermenu })
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Browsers", mybrowsers },
@@ -138,7 +149,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "Text Editor", "gedit" },
                                     { "open terminal", terminal },
                                     { "restart awm", awesome.restart },
-                                    { "power", mypowermanagement }
+--                                    { "power", mypowermanagement }
                                   }
                         })
 
@@ -267,6 +278,7 @@ for s = 1, screen.count() do
     right_layout:add(mylayoutbox[s])
     right_layout:add(mybatterywidget)
     right_layout:add(mytextclock)
+    right_layout:add(mymanagerlauncher)
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()

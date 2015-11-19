@@ -120,7 +120,7 @@ mybrowsers = {
 
 mymail = {
    {"Thunderbird", "thunderbird"},
---   {"mutt", terminal .. " torsocks mutt @> /dev/null"}
+   { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"}
 }
 
 mypowermanagement = {
@@ -144,11 +144,11 @@ mymanagerlauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Browsers", mybrowsers },
---                                    { "E-Mail", mymail},
+                                    { "E-Mail", mymail},
                                     { "uTox", "utox" },
                                     { "Text Editor", "gedit" },
                                     { "open terminal", terminal },
-                                    { "restart awm", awesome.restart },
+--                                    { "restart awm", awesome.restart },
 --                                    { "power", mypowermanagement }
                                   }
                         })

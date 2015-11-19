@@ -106,9 +106,8 @@ end
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "edit config", "gedit" .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "quit", awesome.quit }
 }
 
 mybrowsers = {
@@ -134,6 +133,8 @@ mymanager = {
    { "Toxic", "x-terminal-emulator -e ".."toxic","/usr/share/pixmaps/terminal-tango.xpm"},
    { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"},
    { "logout", awesome.quit, beautiful.awesome_icon },
+   { "restart awm", awesome.restart },
+   { "lock screen", "xscreensaver -nosplash &"  },
    { "power", mypowermanagement }
 }
 
@@ -148,8 +149,6 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "uTox", "utox" },
                                     { "Text Editor", "gedit" },
                                     { "open terminal", terminal },
---                                    { "restart awm", awesome.restart },
---                                    { "power", mypowermanagement }
                                   }
                         })
 

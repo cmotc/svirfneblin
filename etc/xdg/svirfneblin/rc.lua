@@ -20,6 +20,10 @@ require("network.pech")
 require("conky.hud")
 -- Load Debian menu entries
 require("debian.menu")
+-- Load Auto-Hiding side-panel
+require("goblin.side")
+-- Load Toggle-Hiding
+-- require("")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -107,7 +111,7 @@ end
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", "gedit" .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
+   { "restart", awesome.restart }
 }
 
 mybrowsers = {
@@ -193,9 +197,21 @@ nettimer:start()
 mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
-mywibox = {
-    mybatterywidget
-}
+mywibox = {}
+myshortcutbox = {}
+function hideshortcutbox()
+    myshortcutbox[mouse.screen].visible = not myshortcutbox[mouse.screen].visible
+end
+myquicklaunchtoggle = awful.widget.button({ image=beautiful.awesome_icon })
+myquicklaunchtoggle:buttons(awful.button({}, 1, function () hideshortcutbox() end)
+)
+sbtimer = timer({timeout = 6})
+sbtimer:connect_signal("timeout", function()
+        if myshortcutbox[mouse.screen].visible then
+            hideshortcutbox()
+        end
+    end)
+sbtimer:start()
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -257,19 +273,16 @@ for s = 1, screen.count() do
                            awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
-
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
-
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
+    left_layout:add(myquicklaunchtoggle)
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
-
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
@@ -278,14 +291,18 @@ for s = 1, screen.count() do
     right_layout:add(mybatterywidget)
     right_layout:add(mytextclock)
     right_layout:add(mymanagerlauncher)
-
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
-
     mywibox[s]:set_widget(layout)
+    -- create the sidebar shortcut launcher wibox
+    myshortcutbox[s] = awful.wibox({ position = "left", screen = s    })
+    myshortcutbox[s].width=32
+    myshortcutbox[s].height=goblin.button_list_count_members()*myshortcutbox[s].width
+    myshortcutbox[s].y = (768/2)-(myshortcutbox[s].height/2)
+    myshortcutbox[s]:set_widget(goblin.button_layout_menu())
 end
 -- }}}
 

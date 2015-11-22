@@ -8,7 +8,8 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Overview library
-local calladuran = require("calladuran")
+--local revelation = require("calladuran")
+local revelation = require("revelation")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -55,10 +56,11 @@ end
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/etc/xdg/svirfneblin/theme.lua")
-
 -- Initialize Overview plugin
 -- calladuran.init("","")
 
+--revelation.init(tag_name = revelation, rule={class="conky"}, is_excluded=true)
+revelation.init()
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "editor"
@@ -201,10 +203,15 @@ mywibox = {}
 myshortcutbox = {}
 function hideshortcutbox()
     myshortcutbox[mouse.screen].visible = not myshortcutbox[mouse.screen].visible
+    if myshortcutbox[mouse.screen].visible then
+        revelation({rule={class="conky"}, is_excluded=true})
+    end
 end
 myquicklaunchtoggle = awful.widget.button({ image=beautiful.awesome_icon })
-myquicklaunchtoggle:buttons(awful.button({}, 1, function () hideshortcutbox() end)
-)
+myquicklaunchtoggle:buttons(awful.button({}, 1, function () 
+    hideshortcutbox() 
+    end
+))
 sbtimer = timer({timeout = 6})
 sbtimer:connect_signal("timeout", function()
         if myshortcutbox[mouse.screen].visible then

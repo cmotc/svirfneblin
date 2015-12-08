@@ -17,6 +17,8 @@ local menubar = require("menubar")
 require("battery.batt")
 -- NetworkManager library
 require("network.pech")
+-- Network Monitor widget
+require("netmonitor.boddy")
 -- Configure Conky-based Heads Up Display
 require("conky.hud")
 -- Load Debian menu entries
@@ -104,7 +106,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5 }, s, layouts[1])
+    tags[s] = awful.tag({ "Monitor", "Manage", "Research", "Develop", "Communicate", "Scratch", "System" }, s, layouts[1])
 end
 -- }}}
 
@@ -117,30 +119,32 @@ myawesomemenu = {
 }
 
 mybrowsers = {
-   {"Iceweasel","iceweasel"},
-   {"Chromium","chromium"},
---   {"Lynx", terminal .. " torsocks lynx @> /dev/null"},
-   {"Tor Browser","torbrowser-launcher"}
+   {"Iceweasel","iceweasel","/usr/share/pixmaps/iceweasel.xpm"},
+   {"Chromium","chromium","/usr/share/pixmaps/chromium.xpm"},
+   {"Lynx-cur", "x-terminal-emulator -e ".."torsocks lynx"},
+   {"Tor Browser","torbrowser-launcher","/usr/share/pixmaps/torbrowser32.xpm"}
 }
 
 mymail = {
-   {"Thunderbird", "thunderbird"},
-   { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"}
+   { "Icedove", "icedove","/usr/share/pixmaps/icedove.xpm"},
+   { "Mutt", "x-terminal-emulator -e ".."torsocks /usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"}
 }
 
 mypowermanagement = {
-   { "shutdown", terminal .. " -e sudo shutdown now" },
-   { "restart", terminal .. " -e sudo shutdown -r now" },
+   { "shutdown", terminal .. " -e sudo ifconfig wlan0 down && sudo shutdown now" },
+   { "restart", terminal .. " -e sudo ifconfig wlan0 down && sudo shutdown -r now" },
    { "logout", awesome.quit }
 --   { "shutdown", terminal .. " -e sudo shutdown now" }
 }
 
 mymanager = {
-   { "Toxic", "x-terminal-emulator -e ".."toxic","/usr/share/pixmaps/terminal-tango.xpm"},
+--   { "uTox", "utox", "/usr/share/doc/tox-vapi-20150923/utox.png" },
+   { "toxic", terminal .. " -e toxic","/usr/share/pixmaps/terminal-tango.xpm"},
    { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"},
+   { "open terminal", terminal },
    { "logout", awesome.quit, beautiful.awesome_icon },
    { "restart awm", awesome.restart },
-   { "lock screen", "xscreensaver -nosplash &"  },
+   { "Lock Screen", "/usr/bin/xscreensaver-command -lock"},
    { "power", mypowermanagement }
 }
 
@@ -149,11 +153,13 @@ mymanagermenu = awful.menu({ items = mymanager })
 mymanagerlauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymanagermenu })
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+				    { "File Browser", "pcmanfm" },
+                                    { "Text Editor", "gedit" },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Browsers", mybrowsers },
                                     { "E-Mail", mymail},
-                                    { "uTox", "utox" },
-                                    { "Text Editor", "gedit" },
+				    { "toxic", terminal .. " -e toxic" ,"/usr/share/pixmaps/terminal-tango.xpm"},
+--   				    { "uTox", "utox"}, --,"/usr/share/doc/tox-vapi-20150923/utox.png" },
                                     { "open terminal", terminal },
                                   }
                         })
@@ -188,12 +194,21 @@ end
 
 mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                             menu = mynetworkmenu()})
-nettimer = timer({ timeout = 30 })
+nettimer = timer({ timeout = 20 })
 nettimer:connect_signal("timeout", function()
         mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                                 menu = mynetworkmenu()})
     end)
 nettimer:start()
+
+-- create a network map widget
+function mynetworkmap()
+    networkmonitor = awful.menu({	items = netmntr.generate_widget_map()	  })
+    return networkmonitor
+end
+
+mynetworkmapwidget = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                            menu = mynetworkmap()})
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -293,6 +308,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(mynetworkmapwidget)
     right_layout:add(mynetworklauncher)
     right_layout:add(mylayoutbox[s])
     right_layout:add(mybatterywidget)
@@ -327,6 +343,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     awful.key({}, "Pause", function() toggle_conky() end),
+   -- bind PrintScrn to capture a screen
+    awful.key({}, "Print", function() awful.util.spawn("capscr",false) end),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -480,10 +498,16 @@ awful.rules.rules = {
       sticky = true,
       ontop = false,
       focusable = false
-    } }
+    } },
     -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+    { rule = { class = "Iceweasel" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Chromium" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Tor Browser" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Gedit" }, properties = { tag = tags[1][4] } },
+    { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
+    { rule = { class = "Toxic" }, properties = { tag = tags[1][5] } },
+    { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][7] } },
 }
 -- }}}
 
@@ -562,6 +586,7 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+awful.util.spawn_with_shell("run_once /usr/bin/xscreensaver")
 awful.util.spawn_with_shell("run_once compton")
 awful.util.spawn_with_shell("run_once conky")
 -- }}}

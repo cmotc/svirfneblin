@@ -64,7 +64,7 @@ beautiful.init("/etc/xdg/svirfneblin/theme.lua")
 --revelation.init(tag_name = revelation, rule={class="conky"}, is_excluded=true)
 revelation.init()
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "terminator"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -118,33 +118,57 @@ myawesomemenu = {
    { "restart", awesome.restart }
 }
 
+mygames = {
+   { "Dungeon Crawl", "crawl-tiles" },
+   { "Gearhead", terminal .. " gearhead" },
+   { "Gearhead2", terminal .. " gearhead2" },
+   { "Fortune", terminal .. " -e dialog --title Fortune --msgbox $(fortune) 8 78 " },
+}
+
 mybrowsers = {
    {"Iceweasel","iceweasel","/usr/share/pixmaps/iceweasel.xpm"},
    {"Chromium","chromium","/usr/share/pixmaps/chromium.xpm"},
-   {"Lynx-cur", "x-terminal-emulator -e ".."torsocks lynx"},
+   {"Lynx-cur", terminal .. " -c Lynx -e lynx"},
    {"Tor Browser","torbrowser-launcher","/usr/share/pixmaps/torbrowser32.xpm"}
 }
 
-mymail = {
+mydocs = {
+   { "Abiword", "abiword","/usr/share/pixmaps/abiword.xpm"},
+   { "Gnumeric", "gnumeric"},
+   { "Dia", "dia"},
+}
+
+mycomms = {
    { "Icedove", "icedove","/usr/share/pixmaps/icedove.xpm"},
-   { "Mutt", "x-terminal-emulator -e ".."torsocks /usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"}
+   { "toxic", terminal .. " -c Toxic -e toxic","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "Mutt", terminal .. " -c Mutt -e mutt","/usr/share/pixmaps/mutt.xpm"},
+   { "Alpine", terminal .. " -c Alpine -e mutt","/usr/share/pixmaps/mutt.xpm"}
+}
+
+mysys = {
+   { "awesome", myawesomemenu, beautiful.awesome_icon },
+   { "htop", terminal .. " -c htop -e htop","/usr/share/pixmaps/icedove.xpm"},
+   { "ntop", terminal .. " -c htop -e ntop","/usr/share/pixmaps/mutt.xpm"},
+   { "tor-arm", terminal .. " -c torarm -e sudo -u debian-tor arm","/usr/share/pixmaps/mutt.xpm"}
 }
 
 mypowermanagement = {
-   { "shutdown", terminal .. " -e sudo ifconfig wlan0 down && sudo shutdown now" },
-   { "restart", terminal .. " -e sudo ifconfig wlan0 down && sudo shutdown -r now" },
+   { "shutdown", terminal .. " -e sudo sd" },
+   { "restart", terminal .. " -e sudo rs" },
    { "logout", awesome.quit }
 --   { "shutdown", terminal .. " -e sudo shutdown now" }
 }
 
 mymanager = {
 --   { "uTox", "utox", "/usr/share/doc/tox-vapi-20150923/utox.png" },
-   { "toxic", terminal .. " -e toxic","/usr/share/pixmaps/terminal-tango.xpm"},
-   { "Mutt", "x-terminal-emulator -e ".."/usr/bin/mutt","/usr/share/pixmaps/mutt.xpm"},
+   { "rtorrent", terminal .. " -c rtorrent -e rtorrent"},
+   { "Wifite", terminal .. " -c Wifite -e sudo wifite"},
+   { "=============",""},
    { "open terminal", terminal },
    { "logout", awesome.quit, beautiful.awesome_icon },
    { "restart awm", awesome.restart },
    { "Lock Screen", "/usr/bin/xscreensaver-command -lock"},
+   { "=============",""},
    { "power", mypowermanagement }
 }
 
@@ -152,20 +176,24 @@ mymanagermenu = awful.menu({ items = mymanager })
 
 mymanagerlauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymanagermenu })
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+
+mymainmenu = awful.menu({ items = { { "System", mysys },
 				    { "File Browser", "pcmanfm" },
                                     { "Text Editor", "gedit" },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "=============", ""},
                                     { "Browsers", mybrowsers },
-                                    { "E-Mail", mymail},
-				    { "toxic", terminal .. " -e toxic" ,"/usr/share/pixmaps/terminal-tango.xpm"},
---   				    { "uTox", "utox"}, --,"/usr/share/doc/tox-vapi-20150923/utox.png" },
+                                    { "Documents", mydocs },
+                                    { "E-Mail", mycomms },
+                                    { "Games", mygames },
+                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "=============", ""},
                                     { "open terminal", terminal },
                                   }
                         })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
+--mylauncher:set_text("MENU")
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -342,6 +370,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    awful.key({}, "Escape", function () hideshortcutbox() end),
     awful.key({}, "Pause", function() toggle_conky() end),
    -- bind PrintScrn to capture a screen
     awful.key({}, "Print", function() awful.util.spawn("capscr",false) end),
@@ -355,7 +384,8 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({}, "`", function () mymainmenu:show() end),
+--    awful.key({}, "Tab", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -497,17 +527,26 @@ awful.rules.rules = {
       floating = true,
       sticky = true,
       ontop = false,
-      focusable = false
-    } },
+      focusable = false,
+    }, callback = function(c) c:geometry({x=700, y=0}) end },
     -- Set Firefox to always map on tags number 2 of screen 1.
+    { rule = { class = "Pcmanfm" }, properties = { tag = tags[1][1] } },
+    { rule = { class = "Terminator" }, properties = { tag = tags[1][2] }, switchtotag = true },
+    { rule = { class = "htop" }, properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "ntop" }, properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "torarm" }, properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "rtorrent" }, properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "Wifite" }, properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Iceweasel" }, properties = { tag = tags[1][3] } },
-    { rule = { class = "Chromium" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "chromium-browser" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Tor Browser" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Lynx" }, properties = { tag = tags[1][3] }, switchtotag = true },
     { rule = { class = "Gedit" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
-    { rule = { class = "Toxic" }, properties = { tag = tags[1][5] } },
+    { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
     { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] } },
-    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][7] } },
+    { rule = { class = "crawl-tiles" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][7] } }
 }
 -- }}}
 

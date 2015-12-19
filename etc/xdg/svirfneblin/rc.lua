@@ -106,7 +106,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "Monitor", "Manage", "Research", "Develop", "Communicate", "Scratch", "System" }, s, layouts[1])
+    tags[s] = awful.tag({ "Monitor", "Manage", "Research", "Develop", "Communicate", "Scratch", "System" }, s, layouts[2])
 end
 -- }}}
 
@@ -384,7 +384,12 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({}, "`", function () mymainmenu:show() end),
+    awful.key({}, "`", 
+	function () 
+	    if mymainmenu.visible == true then
+	        mymainmenu:show() 
+	    end
+	end),
 --    awful.key({}, "Tab", function () mymainmenu:show() end),
 
     -- Layout manipulation

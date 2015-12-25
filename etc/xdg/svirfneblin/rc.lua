@@ -106,7 +106,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "Mon", "Man", "Res", "Dev", "Com", "Scr", "Fun", "Sys" }, s, layouts[2])
+    tags[s] = awful.tag({ "Mntr", "Mngr", "Rsrc", "Dvlp", "Comm", "Scrt", "Game", "Systm" }, s, layouts[2])
 end
 -- }}}
 
@@ -174,7 +174,7 @@ mymanager = {
 
 mymanagermenu = awful.menu({ items = mymanager })
 
-mymanagerlauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+mymanagerlauncher = awful.widget.launcher({ image = beautiful.user_icon,
                                      menu = mymanagermenu })
 
 mymainmenu = awful.menu({ items = { { "System", mysys },
@@ -192,7 +192,8 @@ mymainmenu = awful.menu({ items = { { "System", mysys },
                         })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_menu_32,
-                                     menu = mymainmenu })
+                                     menu = mymainmenu,
+			})
 --mylauncher:set_text("MENU")
 
 -- Menubar configuration
@@ -220,7 +221,7 @@ function mynetworkmenu()
     return networkmenu
 end
 
-mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
                                             menu = mynetworkmenu()})
 nettimer = timer({ timeout = 20 })
 nettimer:connect_signal("timeout", function()
@@ -235,7 +236,7 @@ function mynetworkmap()
     return networkmonitor
 end
 
-mynetworkmapwidget = awful.widget.launcher({ image = beautiful.awesome_icon,
+mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
                                             menu = mynetworkmap()})
 
 -- Create a textclock widget

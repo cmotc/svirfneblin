@@ -94,7 +94,7 @@ theme.awesome_menu_32 = "/usr/share/svirfneblin/icons/awesome16x32.png"
 theme.awesome_menu_64 = "/usr/share/svirfneblin/icons/awesome16x64.png"
 
 --theme.user_icon = "/usr/share/svirfneblin/icons/usermenu16.png"
---theme.network_icon = "/usr/share/svirfneblin/icons/netmanager16.png"
+theme.network_icon = "/usr/share/svirfneblin/icons/netmanager16.png"
 --theme.monitoring_icon = "/usr/share/svirfneblin/icons/netmonitor16.png"
 --theme.security_icon = "/usr/share/svirfneblin/icons/security16.png"
 

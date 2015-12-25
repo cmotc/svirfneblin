@@ -554,8 +554,9 @@ awful.rules.rules = {
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
     { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] } },
-    { rule = { class = "crawl-tiles" }, properties = { tag = tags[1][6] } },
-    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][7] } }
+    { rule = { class = "XCalc" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "crawl-tiles" }, properties = { tag = tags[1][7] } },
+    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][8] } }
 }
 -- }}}
 
@@ -585,7 +586,7 @@ client.connect_signal("manage", function (c, startup)
         awful.placement.no_offscreen(c)
     end
 
-    local titlebars_enabled = false
+    local titlebars_enabled = true
     if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(
@@ -630,6 +631,10 @@ client.connect_signal("manage", function (c, startup)
         awful.titlebar(c):set_widget(layout)
     end
 end)
+
+function titlebar_add_with_settings(c)
+    awful.titlebar.add(c, { modkey = modkey, height = 16, font = "mono 7"})
+end
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)

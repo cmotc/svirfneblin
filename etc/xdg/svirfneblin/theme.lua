@@ -17,7 +17,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.border_width  = 1
+theme.border_width  = 0
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
@@ -73,7 +73,7 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "/usr/share/awesome/themes/default/background.png"
+theme.wallpaper = "/etc/xdg/svirfneblin/background.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
@@ -89,8 +89,14 @@ theme.layout_tiletop = "/usr/share/awesome/themes/default/layouts/tiletopw.png"
 theme.layout_spiral  = "/usr/share/awesome/themes/default/layouts/spiralw.png"
 theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
--- theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
+theme.awesome_menu_32 = "/usr/share/svirfneblin/icons/awesome16x32.png"
+theme.awesome_menu_64 = "/usr/share/svirfneblin/icons/awesome16x64.png"
+
+--theme.user_icon = "/usr/share/svirfneblin/icons/usermenu16.png"
+--theme.network_icon = "/usr/share/svirfneblin/icons/netmanager16.png"
+--theme.monitoring_icon = "/usr/share/svirfneblin/icons/netmonitor16.png"
+--theme.security_icon = "/usr/share/svirfneblin/icons/security16.png"
 
 -- Define the icon theme for application icons. If not set then the icons 
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

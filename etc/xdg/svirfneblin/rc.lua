@@ -106,7 +106,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "Monitor", "Manage", "Research", "Develop", "Communicate", "Scratch", "System" }, s, layouts[2])
+    tags[s] = awful.tag({ "Mon", "Man", "Res", "Dev", "Com", "Scr", "Fun", "Sys" }, s, layouts[2])
 end
 -- }}}
 
@@ -191,7 +191,7 @@ mymainmenu = awful.menu({ items = { { "System", mysys },
                                   }
                         })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_menu_32,
                                      menu = mymainmenu })
 --mylauncher:set_text("MENU")
 
@@ -248,6 +248,8 @@ function hideshortcutbox()
     myshortcutbox[mouse.screen].visible = not myshortcutbox[mouse.screen].visible
     if myshortcutbox[mouse.screen].visible then
         revelation({rule={class="conky"}, is_excluded=true})
+    else
+        cleanup_revelation_tag()
     end
 end
 myquicklaunchtoggle = awful.widget.button({ image=beautiful.awesome_icon })
@@ -255,10 +257,11 @@ myquicklaunchtoggle:buttons(awful.button({}, 1, function ()
     hideshortcutbox() 
     end
 ))
-sbtimer = timer({timeout = 6})
+sbtimer = timer({timeout = 8})
 sbtimer:connect_signal("timeout", function()
         if myshortcutbox[mouse.screen].visible then
             hideshortcutbox()
+            cleanup_revelation_tag()
         end
     end)
 sbtimer:start()

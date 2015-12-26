@@ -120,9 +120,9 @@ myawesomemenu = {
 
 mygames = {
    { "Dungeon Crawl", "crawl-tiles" },
-   { "Gearhead", terminal .. " gearhead" },
-   { "Gearhead2", terminal .. " gearhead2" },
-   { "Fortune", terminal .. " -e dialog --title Fortune --msgbox $(fortune) 8 78 " },
+   { "Gearhead", terminal .. " -e gearhead" },
+   { "Gearhead2", terminal .. " -e gearhead2" },
+   { "Fortune", terminal .. " -e /bin/sh fortune-wrapper" },
 }
 
 mybrowsers = {
@@ -136,6 +136,7 @@ mydocs = {
    { "Abiword", "abiword","/usr/share/pixmaps/abiword.xpm"},
    { "Gnumeric", "gnumeric"},
    { "Dia", "dia"},
+   { "Pinta", "pinta"}
 }
 
 mycomms = {
@@ -190,7 +191,7 @@ mymainmenu = awful.menu({ items = { { "System", mysys },
                                     { "open terminal", terminal },
                                   }
                         })
-
+--mymainmenu.set_font("mono 7")
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_menu_32,
                                      menu = mymainmenu,
 			})
@@ -414,7 +415,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
@@ -537,7 +537,19 @@ awful.rules.rules = {
       sticky = true,
       ontop = false,
       focusable = false,
-    }, callback = function(c) c:geometry({x=700, y=0}) end },
+    }, callback = function(c) c:geometry({x=700, y=16}) end },
+    { rule = { class = "Florence" },
+      properties = {
+      floating = true,
+      sticky = true,
+--      ontop = false,
+--      focusable = false,
+    }, callback = function(c) 
+           geom = screen[mouse.screen].workarea
+           geox = geom.width - c.geometry(c).width
+           geoy = geom.height - c.geometry(c).height
+           c:geometry({x=geox, y=geoy}) 
+       end },
     -- Set Firefox to always map on tags number 2 of screen 1.
     { rule = { class = "Pcmanfm" }, properties = { tag = tags[1][1] } },
     { rule = { class = "Terminator" }, properties = { tag = tags[1][2] }, switchtotag = true },
@@ -553,12 +565,13 @@ awful.rules.rules = {
     { rule = { class = "Gedit" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
-    { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] } },
-    { rule = { class = "XCalc" }, properties = { tag = tags[1][6] } },
-    { rule = { class = "crawl-tiles" }, properties = { tag = tags[1][7] } },
+    { rule = { class = "Pinta" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
+    { rule = { class = "XCalc" }, properties = { tag = tags[1][6] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
+    { rule = { class = "tiles" }, properties = { tag = tags[1][7] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
     { rule = { class = "Bleachbit" }, properties = { tag = tags[1][8] } }
 }
--- }}}
+-- }}} 
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
@@ -586,7 +599,7 @@ client.connect_signal("manage", function (c, startup)
         awful.placement.no_offscreen(c)
     end
 
-    local titlebars_enabled = true
+    local titlebars_enabled = false
     if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(
@@ -632,14 +645,11 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
-function titlebar_add_with_settings(c)
-    awful.titlebar.add(c, { modkey = modkey, height = 16, font = "mono 7"})
-end
-
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 awful.util.spawn_with_shell("run_once /usr/bin/xscreensaver")
 awful.util.spawn_with_shell("run_once compton")
 awful.util.spawn_with_shell("run_once conky")
+awful.util.spawn_with_shell("run_once user-florence")
 -- }}}

@@ -1,5 +1,6 @@
 -- Standard awesome library
 local gears = require("gears")
+--local timer = require("gears.timer")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
@@ -65,9 +66,10 @@ beautiful.init("/etc/xdg/svirfneblin/theme.lua")
 revelation.init()
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
-editor = os.getenv("EDITOR") or "editor"
+editor = "nano" --os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
-
+packagemanager = "aptitude" --"synaptic"
+packager = terminal .. " -e sudo " .. packagemanager
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -114,48 +116,109 @@ end
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", "gedit" .. " " .. awesome.conffile },
+   { "edit config", "gedit --new-window" .. " " .. awesome.conffile },
    { "restart", awesome.restart }
 }
 
 mygames = {
-   { "Dungeon Crawl", "crawl-tiles" },
+   { "Dungeon Crawl", "crawl-tiles", "/usr/share/icons/hicolor/32x32/apps/crawl.png" },
    { "Gearhead", terminal .. " -e gearhead" },
    { "Gearhead2", terminal .. " -e gearhead2" },
    { "Fortune", terminal .. " -e /bin/sh fortune-wrapper" },
 }
 
+uzblmarks = {
+   { "None", "uzbl"}
+}
+
+xombreromenu = {
+   { "Xombrero default Launch(Uses Tor)", "xombrero https://duckduckgo.com/html", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero i2p Launch", "xombrero -f \".xombrero2p.conf\" http://127.0.0.1:7657/home", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero Detailed Tor Check", "xombrero https://duckduckgo.com/html https://torcheck.xenobite.eu https://check.torproject.org https://panopticlick.eff.org/tracker-nojs", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero insecure Launch(no Tor)", "xombrero -f \".insecure.conf\" https://duckduckgo.com/html", "/usr/share/pixmaps/xombrero.xpm"},
+}
+
 mybrowsers = {
+   {"Xombrero", xombreromenu, "/usr/share/pixmaps/xombrero.xpm"},
    {"Iceweasel","iceweasel","/usr/share/pixmaps/iceweasel.xpm"},
-   {"Chromium","chromium","/usr/share/pixmaps/chromium.xpm"},
-   {"Lynx-cur", terminal .. " -c Lynx -e lynx"},
+   {"Lynx-cur", terminal .. " -c Lynx -e torsocks lynx"},
+--   {"uzbl Bookmarks", uzblmarks},
    {"Tor Browser","torbrowser-launcher","/usr/share/pixmaps/torbrowser32.xpm"}
 }
 
 mydocs = {
    { "Abiword", "abiword","/usr/share/pixmaps/abiword.xpm"},
-   { "Gnumeric", "gnumeric"},
+   { "Gnumeric", "gnumeric", "/usr/share/icons/Tango/32x32/mimetypes/gnome-mime-application-x-gnumeric.png"},
    { "Dia", "dia"},
-   { "Pinta", "pinta"}
+   { "Pinta", "pinta", "/usr/share/icons/hicolor/32x32/apps/pinta.png" }
 }
 
 mycomms = {
    { "Icedove", "icedove","/usr/share/pixmaps/icedove.xpm"},
-   { "toxic", terminal .. " -c Toxic -e toxic","/usr/share/pixmaps/terminal-tango.xpm"},
    { "Mutt", terminal .. " -c Mutt -e mutt","/usr/share/pixmaps/mutt.xpm"},
-   { "Alpine", terminal .. " -c Alpine -e mutt","/usr/share/pixmaps/mutt.xpm"}
+   { "Alpine", terminal .. " -c Alpine -e torsocks mutt 2> /dev/null","/usr/share/pixmaps/mutt.xpm"},
+   { "Profanity", terminal .. " -c Profanity -e torsocks profanity","/usr/share/pixmaps/filled-xterm_32x32.xpm"},
+   { "Mumble", "torsocks mumble","/usr/share/pixmaps/mumble.xpm"},
+   { "irssi", terminal .. " -c Irssi -e torsocks irssi $@ &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "toxic", terminal .. " -c Toxic -e toxic","/usr/share/icons/hicolor/16x16/apps/utox.png"},
+}
+
+distproj = {
+   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Allwinner A33 Debian Kernel", "gedit --new-window \"Projects/Distro_OS_Projects/packages/debian_kernel_allwinner_a33/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "apt-git repo generator", "gedit --new-window \"Projects/Distro_OS_Projects/packages/apt-git/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "f-droid repo generator", "gedit --new-window \"Projects/Distro_OS_Projects/packages/fdroid-git/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Joker Mesh Attack Tools", "gedit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "LAIR Client", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "LAIR Server", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR-map-server/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "LAIR Data", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR-data/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Ratox Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/packages/ratox/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Svirneblin Panel", "gedit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+--   { "valatox wrapper", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+}
+
+liveproj = {
+   { "Buildroot", "gedit --new-window \"Projects/Distro_OS_Projects/live/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Fyrix", "gedit --new-window \"Projects/Distro_OS_Projects/live/fireaxe/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" }
+}
+
+andproj = {
+   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+--   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+}
+
+webproj = {
+   { "Webinfo Root", "gedit --new-window \"Projects/Blogs_and_Infosites/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+   { "Fireaxe Page", "gedit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+}
+
+myproj = {
+   { "edit config", "gedit --new-window" .. " " .. awesome.conffile, beautiful.awesome_icon },
+   { "Distro Packages", distproj},
+   { "Distro Live Configuration", liveproj},
+   { "Android Distro Packages", andproj},   
+   { "Web Info Projects", webproj}
+}
+
+mytraf = {
+   { "traffic monitor(ETH)", terminal .. " -c htop -e sudo iftop -i eth0","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "traffic monitor(WIFI)", terminal .. " -c htop -e sudo iftop -i wlan0","/usr/share/pixmaps/terminal-tango.xpm"}
 }
 
 mysys = {
    { "awesome", myawesomemenu, beautiful.awesome_icon },
-   { "htop", terminal .. " -c htop -e htop","/usr/share/pixmaps/icedove.xpm"},
-   { "ntop", terminal .. " -c htop -e ntop","/usr/share/pixmaps/mutt.xpm"},
-   { "tor-arm", terminal .. " -c torarm -e sudo -u debian-tor arm","/usr/share/pixmaps/mutt.xpm"}
+   { "process monitor", terminal .. " -c htop -e htop","/usr/share/pixmaps/icedove.xpm"},
+   { "network monitor", terminal .. " -c htop -e sudo iptraf","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "traffic monitor", mytraf },
+   { "tor monitor", terminal .. " -c torarm -e sudo -u debian-tor arm","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "package manager", packager ,"/usr/share/pixmaps/terminal-tango.xpm"},
+--   { "tor-arm", terminal .. " -c torarm -e sudo -u debian-tor arm","/usr/share/pixmaps/terminal-tango.xpm"},
+--   { "tor-arm", terminal .. " -c torarm -e sudo -u debian-tor arm","/usr/share/pixmaps/terminal-tango.xpm"},
 }
 
 mypowermanagement = {
-   { "shutdown", terminal .. " -e sudo sd" },
-   { "restart", terminal .. " -e sudo rs" },
+   { "shutdown", "xterm" .. " -e sudo sd" },
+   { "restart", "xterm" .. " -e sudo rs" },
    { "logout", awesome.quit }
 --   { "shutdown", terminal .. " -e sudo shutdown now" }
 }
@@ -166,6 +229,7 @@ mymanager = {
    { "Wifite", terminal .. " -c Wifite -e sudo wifite"},
    { "=============",""},
    { "open terminal", terminal },
+   { "kill screensaver", "killall xscreensaver" },
    { "logout", awesome.quit, beautiful.awesome_icon },
    { "restart awm", awesome.restart },
    { "Lock Screen", "/usr/bin/xscreensaver-command -lock"},
@@ -184,8 +248,9 @@ mymainmenu = awful.menu({ items = { { "System", mysys },
                                     { "=============", ""},
                                     { "Browsers", mybrowsers },
                                     { "Documents", mydocs },
-                                    { "E-Mail", mycomms },
+                                    { "Communication", mycomms },
                                     { "Games", mygames },
+                                    { "Projects", myproj },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "=============", ""},
                                     { "open terminal", terminal },
@@ -210,7 +275,7 @@ mybatterywidget:set_align("right")
 bat_clo = battery.batclosure("BAT1")
 mybatterywidget:set_text(bat_clo())
 
-battimer = timer({ timeout = 30 })
+battimer = timer({ timeout = 15 })
 battimer:connect_signal("timeout", function() 
         mybatterywidget:set_text(bat_clo()) 
     end)
@@ -224,7 +289,7 @@ end
 
 mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
                                             menu = mynetworkmenu()})
-nettimer = timer({ timeout = 20 })
+nettimer = timer({ timeout = 15 })
 nettimer:connect_signal("timeout", function()
         mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                                 menu = mynetworkmenu()})
@@ -239,6 +304,8 @@ end
 
 mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
                                             menu = mynetworkmap()})
+
+
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -374,8 +441,7 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    awful.key({}, "Escape", function () hideshortcutbox() end),
+    awful.key({ modkey,           }, "Escape", function () hideshortcutbox() end),
     awful.key({}, "Pause", function() toggle_conky() end),
    -- bind PrintScrn to capture a screen
     awful.key({}, "Print", function() awful.util.spawn("capscr",false) end),
@@ -514,6 +580,16 @@ clientbuttons = awful.util.table.join(
 root.keys(globalkeys)
 -- }}}
 
+
+geom = screen[mouse.screen].workarea
+kb_geoh = 335
+kb_geow = 1306
+kb_geox = geom.width - kb_geow
+kb_geoy = geom.height - kb_geoh
+kb_dummy_geox = geom.width - 134
+kb_dummy_geoy = geom.height - 134
+--scalex=33.5
+--scaley=33.5
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -542,13 +618,12 @@ awful.rules.rules = {
       properties = {
       floating = true,
       sticky = true,
---      ontop = false,
---      focusable = false,
     }, callback = function(c) 
-           geom = screen[mouse.screen].workarea
-           geox = geom.width - c.geometry(c).width
-           geoy = geom.height - c.geometry(c).height
-           c:geometry({x=geox, y=geoy}) 
+           for key, value in pairs(c.geometry(c)) do
+               if c.geometry(c).y < 400 then
+                   c:geometry({x=kb_dummy_geox, y=kb_dummy_geoy, height=134, width=134})
+               end
+           end
        end },
     -- Set Firefox to always map on tags number 2 of screen 1.
     { rule = { class = "Pcmanfm" }, properties = { tag = tags[1][1] } },
@@ -559,17 +634,23 @@ awful.rules.rules = {
     { rule = { class = "rtorrent" }, properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Wifite" }, properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Iceweasel" }, properties = { tag = tags[1][3] } },
-    { rule = { class = "chromium-browser" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Dillo" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Arora" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Xombrero" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Tor Browser" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Lynx" }, properties = { tag = tags[1][3] }, switchtotag = true },
-    { rule = { class = "Gedit" }, properties = { tag = tags[1][4] } },
+    { rule = { class = "Gedit" }, properties = { tag = tags[1][4], ontop=false } },
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
+    { rule = { class = "Abiword" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "Dia" }, properties = { tag = tags[1][6] } },
+    { rule = { class = "Gnumeric" }, properties = { tag = tags[1][6] } },
     { rule = { class = "Pinta" }, properties = { tag = tags[1][6] } },
     { rule = { class = "Gringotts" }, properties = { tag = tags[1][6] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
     { rule = { class = "XCalc" }, properties = { tag = tags[1][6] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
     { rule = { class = "tiles" }, properties = { tag = tags[1][7] }, callback = function(c) awful.titlebar.show(c, { modkey = modkey, height = 16, font = "mono 7"}) end },
-    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][8] } }
+    { rule = { class = "Bleachbit" }, properties = { tag = tags[1][8] } },
+    { rule = { class = "Synaptic" }, properties = { tag = tags[1][8] } }
 }
 -- }}} 
 
@@ -651,5 +732,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.util.spawn_with_shell("run_once /usr/bin/xscreensaver")
 awful.util.spawn_with_shell("run_once compton")
 awful.util.spawn_with_shell("run_once conky")
-awful.util.spawn_with_shell("run_once user-florence")
+-- Start the on-screen keyboard
+--awful.util.spawn_with_shell("run_once user-florence")
+
 -- }}}

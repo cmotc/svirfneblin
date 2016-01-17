@@ -159,7 +159,8 @@ mycomms = {
    { "Alpine", terminal .. " -c Alpine -e torsocks mutt 2> /dev/null","/usr/share/pixmaps/mutt.xpm"},
    { "Profanity", terminal .. " -c Profanity -e torsocks profanity","/usr/share/pixmaps/filled-xterm_32x32.xpm"},
    { "Mumble", "torsocks mumble","/usr/share/pixmaps/mumble.xpm"},
-   { "irssi", terminal .. " -c Irssi -e torsocks irssi $@ &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "irssi", terminal .. " -c Irssi -e torsocks irssi &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "irssi2p", terminal .. " -c Irssi -e irssi -c \"localhost\" -p \"6668\" &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
    { "toxic", terminal .. " -c Toxic -e toxic","/usr/share/icons/hicolor/16x16/apps/utox.png"},
 }
 

@@ -120,22 +120,36 @@ myawesomemenu = {
    { "restart", awesome.restart }
 }
 
+mylair = {
+   { "Enter Lair", "lair" },
+   { "Edit configuration file", "gedit --new-window .lairrc" },
+   { "Edit default resource file", "gedit --new-window .config/lair/default-resources.xml" },
+}
+
 mygames = {
    { "Dungeon Crawl", "crawl-tiles", "/usr/share/icons/hicolor/32x32/apps/crawl.png" },
    { "Gearhead", terminal .. " -e gearhead" },
    { "Gearhead2", terminal .. " -e gearhead2" },
    { "Fortune", terminal .. " -e /bin/sh fortune-wrapper" },
+   { "LAIR", mylair }
 }
 
 uzblmarks = {
    { "None", "uzbl"}
 }
 
+xombreroconfigs = {
+   { "Edit Xombrero Default Config(.xombrero.conf)", "gedit --new-window \".xombrero.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Edit Xombrero i2p Config(.xombrero.i2p.conf)", "gedit --new-window \".xombrero2p.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Edit Xombrero Insecure Config(.insecure.conf)", "gedit --new-window \".insecure.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
+}
+
 xombreromenu = {
-   { "Xombrero default Launch(Uses Tor)", "xombrero https://duckduckgo.com/html", "/usr/share/pixmaps/xombrero.xpm"},
-   { "Xombrero i2p Launch", "xombrero -f \".xombrero2p.conf\" http://127.0.0.1:7657/home", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero default Launch(Uses Tor)", "xombrero about:cookiejar https://duckduckgo.com/lite/", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero i2p Launch", "xombrero -f \".xombrero.i2p.conf\"  http://127.0.0.1:7657/home http://127.0.0.1:7658/help/ http://direct.i2p" , "/usr/share/pixmaps/xombrero.xpm"},
    { "Xombrero Detailed Tor Check", "xombrero https://duckduckgo.com/html https://torcheck.xenobite.eu https://check.torproject.org https://panopticlick.eff.org/tracker-nojs", "/usr/share/pixmaps/xombrero.xpm"},
-   { "Xombrero insecure Launch(no Tor)", "xombrero -f \".insecure.conf\" https://duckduckgo.com/html", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Xombrero insecure Launch(no Tor)", "xombrero -f \".insecure.conf\"  https://duckduckgo.com/html", "/usr/share/pixmaps/xombrero.xpm"},
+   { "Edit Xombrero Configs", xombreroconfigs, "/usr/share/pixmaps/xombrero.xpm"},
 }
 
 mybrowsers = {
@@ -150,7 +164,8 @@ mydocs = {
    { "Abiword", "abiword","/usr/share/pixmaps/abiword.xpm"},
    { "Gnumeric", "gnumeric", "/usr/share/icons/Tango/32x32/mimetypes/gnome-mime-application-x-gnumeric.png"},
    { "Dia", "dia"},
-   { "Pinta", "pinta", "/usr/share/icons/hicolor/32x32/apps/pinta.png" }
+   { "Pinta", "pinta", "/usr/share/icons/hicolor/32x32/apps/pinta.png" },
+   { "Gringotts", "/usr/bin/gringotts", "/usr/share/pixmaps/gringotts-32.xpm"}
 }
 
 mycomms = {
@@ -172,10 +187,14 @@ distproj = {
    { "Joker Mesh Attack Tools", "gedit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
    { "LAIR Client", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
    { "LAIR Server", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR-map-server/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "LAIR Data", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR-data/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "LAIR Data", "gedit --new-window \"Projects/Distro_OS_Projects/packages/valair-data/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Namecoin Core", "gedit --new-window \"Projects/Distro_OS_Projects/packages/namecoin-core/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Namecoin Controller", "gedit --new-window \"Projects/Distro_OS_Projects/packages/nmcontrol/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
    { "Ratox Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/packages/ratox/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
    { "Svirneblin Panel", "gedit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
---   { "valatox wrapper", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Vala Tox Bot", "gedit --new-window \"Projects/Distro_OS_Projects/packages/tartrazine/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+--   { "Vala Tox Integration Lib", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Vala Tox Wrapper", "gedit --new-window \"Projects/Distro_OS_Projects/packages/tox-vapi/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
 }
 
 liveproj = {
@@ -190,11 +209,15 @@ andproj = {
 
 webproj = {
    { "Webinfo Root", "gedit --new-window \"Projects/Blogs_and_Infosites/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+   { "Personal Blog", "gedit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
    { "Fireaxe Page", "gedit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+
 }
 
 myproj = {
    { "edit config", "gedit --new-window" .. " " .. awesome.conffile, beautiful.awesome_icon },
+   { "edit .bash_aliases", "gedit --new-window" .. " .bash_aliases", beautiful.awesome_icon },
+   { "edit .profile", "gedit --new-window" .. " .profile", beautiful.awesome_icon },
    { "Distro Packages", distproj},
    { "Distro Live Configuration", liveproj},
    { "Android Distro Packages", andproj},   

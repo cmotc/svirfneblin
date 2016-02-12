@@ -4,7 +4,7 @@
 
 theme = {}
 
-theme.font          = "mono 7"
+theme.font          = "silkscreen 6"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -41,8 +41,8 @@ theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = "/usr/share/awesome/themes/default/submenu.png"
-theme.menu_height = 15
-theme.menu_width  = 380
+theme.menu_height = 24
+theme.menu_width  = 240
 
 -- You can add as many variables as
 -- you wish and access them by using

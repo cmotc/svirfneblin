@@ -1,6 +1,5 @@
 -- Standard awesome library
 local gears = require("gears")
---local timer = require("gears.timer")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
@@ -8,6 +7,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local vicious = require("vicious")
 -- Overview library
 --local revelation = require("calladuran")
 local revelation = require("revelation")
@@ -66,7 +66,7 @@ beautiful.init("/etc/xdg/svirfneblin/theme.lua")
 revelation.init()
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
-editor = "nano" --os.getenv("EDITOR") or "editor"
+editor = "medit --new-window" --os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 packagemanager = "aptitude" --"synaptic"
 packager = terminal .. " -e sudo " .. packagemanager
@@ -116,14 +116,14 @@ end
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", "gedit --new-window" .. " " .. awesome.conffile },
+   { "edit config", "medit --new-window" .. " " .. awesome.conffile },
    { "restart", awesome.restart }
 }
 
 mylair = {
    { "Enter Lair", "lair" },
-   { "Edit configuration file", "gedit --new-window .lairrc" },
-   { "Edit default resource file", "gedit --new-window .config/lair/default-resources.xml" },
+   { "Edit configuration file", "medit --new-window .lairrc" },
+   { "Edit default resource file", "medit --new-window .config/lair/default-resources.xml" },
 }
 
 mygames = {
@@ -135,13 +135,14 @@ mygames = {
 }
 
 uzblmarks = {
-   { "None", "uzbl"}
+   { "None", "uzbl"},
+   { "Google", "uzbl google.com"}
 }
 
 xombreroconfigs = {
-   { "Edit Xombrero Default Config(.xombrero.conf)", "gedit --new-window \".xombrero.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Edit Xombrero i2p Config(.xombrero.i2p.conf)", "gedit --new-window \".xombrero2p.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Edit Xombrero Insecure Config(.insecure.conf)", "gedit --new-window \".insecure.conf\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Edit Xombrero Default Config(.xombrero.conf)", "medit --new-window \".xombrero.conf\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Edit Xombrero i2p Config(.xombrero.i2p.conf)", "medit --new-window \".xombrero2p.conf\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Edit Xombrero Insecure Config(.insecure.conf)", "medit --new-window \".insecure.conf\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
 }
 
 xombreromenu = {
@@ -154,9 +155,8 @@ xombreromenu = {
 
 mybrowsers = {
    {"Xombrero", xombreromenu, "/usr/share/pixmaps/xombrero.xpm"},
-   {"Iceweasel","iceweasel","/usr/share/pixmaps/iceweasel.xpm"},
    {"Lynx-cur", terminal .. " -c Lynx -e torsocks lynx"},
---   {"uzbl Bookmarks", uzblmarks},
+   {"uzbl Bookmarks", uzblmarks},
    {"Tor Browser","torbrowser-launcher","/usr/share/pixmaps/torbrowser32.xpm"}
 }
 
@@ -180,47 +180,70 @@ mycomms = {
 }
 
 distproj = {
-   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Allwinner A33 Debian Kernel", "gedit --new-window \"Projects/Distro_OS_Projects/packages/debian_kernel_allwinner_a33/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "apt-git repo generator", "gedit --new-window \"Projects/Distro_OS_Projects/packages/apt-git/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "f-droid repo generator", "gedit --new-window \"Projects/Distro_OS_Projects/packages/fdroid-git/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Joker Mesh Attack Tools", "gedit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "LAIR Client", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "LAIR Server", "gedit --new-window \"Projects/Distro_OS_Projects/packages/vaLAIR-map-server/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "LAIR Data", "gedit --new-window \"Projects/Distro_OS_Projects/packages/valair-data/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Namecoin Core", "gedit --new-window \"Projects/Distro_OS_Projects/packages/namecoin-core/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Namecoin Controller", "gedit --new-window \"Projects/Distro_OS_Projects/packages/nmcontrol/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Ratox Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/packages/ratox/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Svirneblin Panel", "gedit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Vala Tox Bot", "gedit --new-window \"Projects/Distro_OS_Projects/packages/tartrazine/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
---   { "Vala Tox Integration Lib", "gedit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Vala Tox Wrapper", "gedit --new-window \"Projects/Distro_OS_Projects/packages/tox-vapi/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
+   { "Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Allwinner A33 Debian Kernel", "medit --new-window \"Projects/Distro_OS_Projects/packages/debian_kernel_allwinner_a33/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "apt-git repo generator", "medit --new-window \"Projects/Distro_OS_Projects/packages/apt-git/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Allwinner Debootstrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/bootstrap-sd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "f-droid repo generator", "medit --new-window \"Projects/Distro_OS_Projects/packages/fdroid-git/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "File System SDK", "medit --new-window \"Projects/Distro_OS_Projects/packages/fskit/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Igor Pekovnic's Libs", "medit --new-window \"Projects/Reverse_Engineering_Projects/lib/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Init Agnostic Stat Library", "medit --new-window \"Projects/Distro_OS_Projects/packages/libpstat/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Joker Mesh Attack Tools", "medit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "LAIR Client", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "LAIR Server", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-map-server/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "LAIR Data", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-data/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Multipoint TLS Verification", "medit --new-window \"Projects/Distro_OS_Projects/packages/multipoint_tls_verification/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Namecoin Core", "medit --new-window \"Projects/Distro_OS_Projects/packages/namecoin-core/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Namecoin Controller", "medit --new-window \"Projects/Distro_OS_Projects/packages/nmcontrol/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Ratox Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/packages/ratox/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Goblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-goblin/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Svirneblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Toxcore", "medit --new-window \"Projects/Distro_OS_Projects/packages/toxcore/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Toxic", "medit --new-window \"Projects/Distro_OS_Projects/packages/toxic/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "URCD", "medit --new-window \"Projects/Distro_OS_Projects/packages/urcd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Vala Tox Bot", "medit --new-window \"Projects/Distro_OS_Projects/packages/tartrazine/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Vala Tox Integration Lib", "medit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Vala Tox Wrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/tox-vapi/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "vdev", "medit --new-window \"Projects/Distro_OS_Projects/packages/vdev/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "WarSMS", "medit --new-window \"Projects/Distro_OS_Projects/packages/WarSMS/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Which Goddamn Dialog Alias", "medit --new-window \"Projects/Distro_OS_Projects/packages/wgdda/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "**sh Numeric Array Wrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/xxsh-numeric-array/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
 }
 
 liveproj = {
-   { "Buildroot", "gedit --new-window \"Projects/Distro_OS_Projects/live/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" },
-   { "Fyrix", "gedit --new-window \"Projects/Distro_OS_Projects/live/fireaxe/README.md\"","/usr/share/pixmaps/gedit-icon.xpm" }
+   { "Buildroot", "medit --new-window \"Projects/Distro_OS_Projects/live/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Fyrix", "medit --new-window \"Projects/Distro_OS_Projects/live/fireaxe/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "notDOS", "medit --new-window \"Projects/Distro_OS_Projects/live/notDOS/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Coreboot Scan Suite", "medit --new-window \"Projects/Distro_OS_Projects/live/hwtestsuite/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" }
 }
 
 andproj = {
-   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
---   { "Nightlies", "gedit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+   { "Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+--   { "Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/AOSP/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
 }
 
 webproj = {
-   { "Webinfo Root", "gedit --new-window \"Projects/Blogs_and_Infosites/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
-   { "Personal Blog", "gedit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
-   { "Fireaxe Page", "gedit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/pixmaps/gedit-icon.xpm"},
+   { "Webinfo Root", "medit --new-window \"Projects/Blogs_and_Infosites/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "CMOTC Blog", "medit --new-window \"Projects/Blogs_and_Infosites/cmotc.github.io/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "Fireaxe Page", "medit --new-window \"Projects/Blogs_and_Infosites/fyrix.github.io/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "Personal Blog", "medit --new-window \"Projects/Blogs_and_Infosites/personal-blog/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+}
 
+revproj = {
+   { " Root", "medit --new-window \"Projects/Reverse_Engineering_Projects/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "Coreboot x11m", "medit --new-window \"Projects/Reverse_Engineering_Projects/coreboot/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "u-boot A33", "medit --new-window \"Projects/Reverse_Engineering_Projects/u-boot/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
+   { "ANTM Revo", "medit --new-window \"Projects/Reverse_Engineering_Projects/android_product_antm_revo/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png"},
 }
 
 myproj = {
-   { "edit config", "gedit --new-window" .. " " .. awesome.conffile, beautiful.awesome_icon },
-   { "edit .bash_aliases", "gedit --new-window" .. " .bash_aliases", beautiful.awesome_icon },
-   { "edit .profile", "gedit --new-window" .. " .profile", beautiful.awesome_icon },
+   { "edit config", "medit --new-window" .. " " .. awesome.conffile, beautiful.awesome_icon },
+   { "edit .bash_aliases", "medit --new-window" .. " .bash_aliases", beautiful.awesome_icon },
+   { "edit .profile", "medit --new-window" .. " .profile", beautiful.awesome_icon },
    { "Distro Packages", distproj},
    { "Distro Live Configuration", liveproj},
    { "Android Distro Packages", andproj},   
+   { "Reverse Engineering Projects, Bootloaders", revproj},
    { "Web Info Projects", webproj}
 }
 
@@ -261,14 +284,18 @@ mymanager = {
    { "power", mypowermanagement }
 }
 
+fyrix = {
+   { "Bootstrap an SD card for an Allwinner Tablet", terminal .. " --working-directory \"Projects/Distro_OS_Projects/packages/bootstrap-sd/\"" }
+}
+
 mymanagermenu = awful.menu({ items = mymanager })
 
 mymanagerlauncher = awful.widget.launcher({ image = beautiful.user_icon,
                                      menu = mymanagermenu })
 
 mymainmenu = awful.menu({ items = { { "System", mysys },
-				    { "File Browser", "pcmanfm" },
-                                    { "Text Editor", "gedit" },
+									{ "File Browser", "pcmanfm" },
+                                    { "Text Editor", "medit" },
                                     { "=============", ""},
                                     { "Browsers", mybrowsers },
                                     { "Documents", mydocs },
@@ -276,6 +303,7 @@ mymainmenu = awful.menu({ items = { { "System", mysys },
                                     { "Games", mygames },
                                     { "Projects", myproj },
                                     { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "Fireaxe", fyrix },
                                     { "=============", ""},
                                     { "open terminal", terminal },
                                   }
@@ -310,26 +338,28 @@ function mynetworkmenu()
     networkmenu = awful.menu({	items = netmgr.generate_network_menu()	  })
     return networkmenu
 end
-
-mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
-                                            menu = mynetworkmenu()})
-nettimer = timer({ timeout = 15 })
-nettimer:connect_signal("timeout", function()
-        mynetworklauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                                menu = mynetworkmenu()})
-    end)
-nettimer:start()
+mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
+function updatenetworkmenu()
+	mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
+												menu = mynetworkmenu()})
+	return mynetworklauncher
+end
+--updatenetworkmenu()
+vicious.register(mynetworklauncher, awful.widget.launcher, updatenetworkmenu(), 10 )
 
 -- create a network map widget
 function mynetworkmap()
     networkmonitor = awful.menu({	items = netmntr.generate_widget_map()	  })
     return networkmonitor
 end
-
-mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
-                                            menu = mynetworkmap()})
-
-
+mynetworkmapwidget = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
+function updatenetworkmap()
+	mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
+	                                            menu = mynetworkmap()})
+	return mynetworkmapwidget
+end
+--updatenetworkmap()
+vicious.register(mynetworkmapwidget, awful.widget.launcher, updatenetworkmap(), 120 )
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -445,10 +475,10 @@ for s = 1, screen.count() do
     layout:set_right(right_layout)
     mywibox[s]:set_widget(layout)
     -- create the sidebar shortcut launcher wibox
-    myshortcutbox[s] = awful.wibox({ position = "left", screen = s    })
-    myshortcutbox[s].width=32
-    myshortcutbox[s].height=goblin.button_list_count_members()*myshortcutbox[s].width
-    myshortcutbox[s].y = (768/2)-(myshortcutbox[s].height/2)
+    myshortcutbox[s] = awful.wibox({ position = "bottom", align = "left", screen = s    })
+    myshortcutbox[s].height=24
+	myshortcutbox[s].width=goblin.button_list_count_members()*myshortcutbox[s].height
+    --myshortcutbox[s].y = (768/2)-(myshortcutbox[s].height/2)
     myshortcutbox[s]:set_widget(goblin.button_layout_menu())
 end
 -- }}}
@@ -469,6 +499,12 @@ globalkeys = awful.util.table.join(
     awful.key({}, "Pause", function() toggle_conky() end),
    -- bind PrintScrn to capture a screen
     awful.key({}, "Print", function() awful.util.spawn("capscr",false) end),
+    awful.key({ modkey,			  }, "Print", function() 
+		hideshortcutbox()
+		awful.util.spawn("capscr 2",false) 
+	end
+	),
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -659,11 +695,12 @@ awful.rules.rules = {
     { rule = { class = "Wifite" }, properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Iceweasel" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Dillo" }, properties = { tag = tags[1][3] } },
-    { rule = { class = "Arora" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Xombrero" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Tor Browser" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Uzbl-core" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Lynx" }, properties = { tag = tags[1][3] }, switchtotag = true },
-    { rule = { class = "Gedit" }, properties = { tag = tags[1][4], ontop=false } },
+    { rule = { class = "Medit" }, properties = { tag = tags[1][4], ontop=false } },
+	{ rule = { class = "medit" }, properties = { tag = tags[1][4], ontop=false } },
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
     { rule = { class = "Abiword" }, properties = { tag = tags[1][6] } },

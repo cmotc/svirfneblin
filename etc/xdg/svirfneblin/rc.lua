@@ -333,33 +333,13 @@ battimer:connect_signal("timeout", function()
     end)
 battimer:start()
 
--- create a network menu widget
-function mynetworkmenu()
-    networkmenu = awful.menu({	items = netmgr.generate_network_menu()	  })
-    return networkmenu
-end
+-- create and register a network manager widget
 mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
-function updatenetworkmenu()
-	mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
-												menu = mynetworkmenu()})
-	return mynetworklauncher
-end
---updatenetworkmenu()
-vicious.register(mynetworklauncher, awful.widget.launcher, updatenetworkmenu(), 10 )
+vicious.register(mynetworklauncher, awful.widget.launcher, netmgr.updatenetworkmenu(), 20 )
 
 -- create a network map widget
-function mynetworkmap()
-    networkmonitor = awful.menu({	items = netmntr.generate_widget_map()	  })
-    return networkmonitor
-end
 mynetworkmapwidget = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
-function updatenetworkmap()
-	mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
-	                                            menu = mynetworkmap()})
-	return mynetworkmapwidget
-end
---updatenetworkmap()
-vicious.register(mynetworkmapwidget, awful.widget.launcher, updatenetworkmap(), 120 )
+vicious.register(mynetworkmapwidget, awful.widget.launcher, netmntr.updatenetworkmap(), 1440 )
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()

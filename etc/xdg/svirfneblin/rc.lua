@@ -349,7 +349,7 @@ vicious.register(myweatherwidget, vicious.widgets.weather,
 				function(widget, args)
 					weathertooltip:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
                     return args["{tempc}"] .. "C"
-                end, 1800, "KEKN")
+                end, 1800, "AC")
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()

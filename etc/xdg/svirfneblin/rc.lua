@@ -169,45 +169,81 @@ mydocs = {
 }
 
 mycomms = {
-   { "Icedove", "icedove","/usr/share/pixmaps/icedove.xpm"},
-   { "Mutt", terminal .. " -c Mutt -e mutt","/usr/share/pixmaps/mutt.xpm"},
-   { "Alpine", terminal .. " -c Alpine -e torsocks mutt 2> /dev/null","/usr/share/pixmaps/mutt.xpm"},
-   { "Profanity", terminal .. " -c Profanity -e torsocks profanity","/usr/share/pixmaps/filled-xterm_32x32.xpm"},
+   { "Mutt", terminal .. " -c Mutt -e mutt_with_tor","/usr/share/pixmaps/mutt.xpm"},
+   { "Profanity", terminal .. " -c Profanity -e profanity_with_tor","/usr/share/pixmaps/filled-xterm_32x32.xpm"},
    { "Mumble", "torsocks mumble","/usr/share/pixmaps/mumble.xpm"},
-   { "irssi", terminal .. " -c Irssi -e torsocks irssi &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
+   { "irssi", terminal .. " -c Irssi -e irssi_with_tor","/usr/share/pixmaps/terminal-tango.xpm"},
    { "irssi2p", terminal .. " -c Irssi -e irssi -c \"localhost\" -p \"6668\" &> /dev/null","/usr/share/pixmaps/terminal-tango.xpm"},
    { "toxic", terminal .. " -c Toxic -e toxic","/usr/share/icons/hicolor/16x16/apps/utox.png"},
 }
 
-distproj = {
-   { "Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Allwinner A33 Debian Kernel", "medit --new-window \"Projects/Distro_OS_Projects/packages/debian_kernel_allwinner_a33/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+awesomeproj = {
+   { "Goblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-goblin/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Network Management Widget", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-network-manager/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Network Monitoring Widget", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-netmonitor-widget/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Svirneblin Conky HUD", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-conky-hud/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Svirneblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+fireaxeproj = {
    { "apt-git repo generator", "medit --new-window \"Projects/Distro_OS_Projects/packages/apt-git/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Allwinner Debootstrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/bootstrap-sd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "f-droid repo generator", "medit --new-window \"Projects/Distro_OS_Projects/packages/fdroid-git/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "File System SDK", "medit --new-window \"Projects/Distro_OS_Projects/packages/fskit/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Igor Pekovnic's Libs", "medit --new-window \"Projects/Reverse_Engineering_Projects/lib/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Init Agnostic Stat Library", "medit --new-window \"Projects/Distro_OS_Projects/packages/libpstat/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Joker Mesh Attack Tools", "medit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "LAIR Client", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "LAIR Server", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-map-server/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "LAIR Data", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-data/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+privproj = {
+   { "I2P C++ Implementation", "medit --new-window \"Projects/Distro_OS_Projects/packages/i2pd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Multipoint TLS Verification", "medit --new-window \"Projects/Distro_OS_Projects/packages/multipoint_tls_verification/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Namecoin Core", "medit --new-window \"Projects/Distro_OS_Projects/packages/namecoin-core/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Namecoin Controller", "medit --new-window \"Projects/Distro_OS_Projects/packages/nmcontrol/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Ratox Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/packages/ratox/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Goblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-goblin/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "Svirneblin Panel", "medit --new-window \"Projects/Distro_OS_Projects/packages/svirfneblin-panel/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Toxcore", "medit --new-window \"Projects/Distro_OS_Projects/packages/toxcore/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Toxic", "medit --new-window \"Projects/Distro_OS_Projects/packages/toxic/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "URCD", "medit --new-window \"Projects/Distro_OS_Projects/packages/urcd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Vala Tox Bot", "medit --new-window \"Projects/Distro_OS_Projects/packages/tartrazine/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Vala Tox Integration Lib", "medit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "Vala Tox Wrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/tox-vapi/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
-   { "vdev", "medit --new-window \"Projects/Distro_OS_Projects/packages/vdev/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+armproj = {
+   { "Allwinner A33 Debian Kernel", "medit --new-window \"Projects/Distro_OS_Projects/packages/debian_kernel_allwinner_a33/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Allwinner Debootstrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/bootstrap-sd/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Igor Pekovnic's Libs", "medit --new-window \"Projects/Reverse_Engineering_Projects/lib/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Arch Linux Pi Bootstrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/pi-arch-live-config/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+secproj = {
+   { "Joker Mesh Attack Tools", "medit --new-window \"Projects/Distro_OS_Projects/packages/joker/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "WarSMS", "medit --new-window \"Projects/Distro_OS_Projects/packages/WarSMS/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+openrcproj = {
+   { "File System SDK", "medit --new-window \"Projects/Distro_OS_Projects/packages/fskit/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "Init Agnostic Stat Library", "medit --new-window \"Projects/Distro_OS_Projects/packages/libpstat/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "NetIFRC Support", "medit --new-window \"Projects/Distro_OS_Projects/packages/netifrc/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "vdev", "medit --new-window \"Projects/Distro_OS_Projects/packages/vdev/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+gameproj = {
+   { "LAIR Client", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "LAIR Server", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-map-server/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "LAIR Data", "medit --new-window \"Projects/Distro_OS_Projects/packages/valair-data/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },   
+}
+
+shellproj = {
    { "Which Goddamn Dialog Alias", "medit --new-window \"Projects/Distro_OS_Projects/packages/wgdda/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
    { "**sh Numeric Array Wrapper", "medit --new-window \"Projects/Distro_OS_Projects/packages/xxsh-numeric-array/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+}
+
+distproj = {
+   { "Nightlies", "medit --new-window \"Projects/Distro_OS_Projects/packages/README.md\"","/usr/share/icons/hicolor/48x48/apps/medit.png" },
+   { "ARM Architecture Projectss", armproj },
+   { "AwesomeWM Customization Projects", awesomeproj },
+   { "Game Projects", gameproj },
+   { "Hobby Distro Management Projects", fireaxeproj },
+   { "Privacy and Sustainability Related Projects", privproj},
+   { "Security Testing/Demonstration Projects", secproj },
+   { "Shell Hacking Projects", shellproj },
+   { "SystemD Resistance Projects", openrcproj },
 }
 
 liveproj = {
@@ -333,13 +369,33 @@ battimer:connect_signal("timeout", function()
     end)
 battimer:start()
 
--- create and register a network manager widget
+-- create a network menu widget
+function mynetworkmenu()
+    networkmenu = awful.menu({	items = netmgr.generate_network_menu()	  })
+    return networkmenu
+end
 mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
-vicious.register(mynetworklauncher, awful.widget.launcher, netmgr.updatenetworkmenu(), 20 )
+function updatenetworkmenu()
+	mynetworklauncher = awful.widget.launcher({ image = beautiful.network_icon,
+												menu = mynetworkmenu()})
+	return mynetworklauncher
+end
+--updatenetworkmenu()
+vicious.register(mynetworklauncher, awful.widget.launcher, updatenetworkmenu(), 30 )
 
 -- create a network map widget
+function mynetworkmap()
+    networkmonitor = awful.menu({	items = netmntr.generate_widget_map()	  })
+    return networkmonitor
+end
 mynetworkmapwidget = awful.widget.launcher({ image = beautiful.network_icon, menu = awful.menu({ items = { { "s" , "s" }, { "s" , "s" }, } }) })
-vicious.register(mynetworkmapwidget, awful.widget.launcher, netmntr.updatenetworkmap(), 1440 )
+function updatenetworkmap()
+	mynetworkmapwidget = awful.widget.launcher({ image = beautiful.monitoring_icon,
+	                                            menu = mynetworkmap()})
+	return mynetworkmapwidget
+end
+--updatenetworkmap()
+vicious.register(mynetworkmapwidget, awful.widget.launcher, updatenetworkmap(), 1440 )
 
 -- Create a weather widget
 myweatherwidget = wibox.widget.textbox()
@@ -349,7 +405,7 @@ vicious.register(myweatherwidget, vicious.widgets.weather,
 				function(widget, args)
 					weathertooltip:set_text("City: " .. args["{city}"] .."\nWind: " .. args["{windkmh}"] .. "km/h " .. args["{wind}"] .. "\nSky: " .. args["{sky}"] .. "\nHumidity: " .. args["{humid}"] .. "%")
                     return args["{tempc}"] .. "C"
-                end, 1800, "AC")
+                end, 1800, "KEKN")
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -452,6 +508,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+	right_layout:add(myweatherwidget)
     right_layout:add(mynetworkmapwidget)
     right_layout:add(mynetworklauncher)
     right_layout:add(mylayoutbox[s])
@@ -688,9 +745,9 @@ awful.rules.rules = {
     { rule = { class = "Xombrero" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Tor Browser" }, properties = { tag = tags[1][3] } },
     { rule = { class = "Uzbl-core" }, properties = { tag = tags[1][3] } },
-    { rule = { class = "Lynx" }, properties = { tag = tags[1][3] }, switchtotag = true },
-    { rule = { class = "Medit" }, properties = { tag = tags[1][4], ontop=false } },
-	{ rule = { class = "medit" }, properties = { tag = tags[1][4], ontop=false } },
+    { rule = { class = "Lynx" }, properties = { tag = tags[1][3] } },
+    { rule = { class = "Medit" }, properties = { tag = tags[1][4] } },
+	{ rule = { class = "medit" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Anjuta" }, properties = { tag = tags[1][4] } },
     { rule = { class = "Icedove" }, properties = { tag = tags[1][5] } },
     { rule = { class = "Abiword" }, properties = { tag = tags[1][6] } },

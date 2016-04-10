@@ -58,7 +58,7 @@ Homepage: https://www.github.com/svirfneblin-panel
 
 Package: $DEBFOLDER
 Architecture: all
-Depends: lightdm, lightdm-gtk-greeter, awesome (>= 3.4), svirfneblin-battery-widget, svirfneblin-network-manager, \${misc:Depends}
+Depends: awesome (>= 3.4), svirfneblin-battery-widget, svirfneblin-network-manager, \${misc:Depends}
 Description: A Gnome3-Like configuration for Awesome WM
  I like Gnome3's appearance, but I want tiling and I hate ShellShape, 
  and I don't think I really need  all these graphical configuration 

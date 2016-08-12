@@ -95,10 +95,11 @@ theme.awesome_menu_64 = "/usr/share/svirfneblin/icons/awesome16x64.png"
 
 theme.user_icon = "/usr/share/svirfneblin/icons/user16.png"
 theme.network_icon = "/usr/share/svirfneblin/icons/netmanager16.png"
+theme.scan_icon = "/usr/share/svirfneblin/icons/rescan16x32.png"
 theme.monitoring_icon = "/usr/share/svirfneblin/icons/netmonitor16.png"
 --theme.security_icon = "/usr/share/svirfneblin/icons/security16.png"
 
--- Define the icon theme for application icons. If not set then the icons 
+-- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 

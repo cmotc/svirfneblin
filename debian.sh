@@ -26,18 +26,19 @@ cd $DEBFOLDERNAME
 pwd
 
 # Create the packaging skeleton (debian/*)
-dh_make --indep --createorig 
+dh_make --indep --createorig
 
 mkdir -p debian/tmp/usr
 cp -R usr debian/tmp/usr
 
 # Remove make calls
-grep -v makefile debian/rules > debian/rules.new 
-mv debian/rules.new debian/rules 
+grep -v makefile debian/rules > debian/rules.new
+mv debian/rules.new debian/rules
 
-# debian/install must contain the list of scripts to install 
+
+# debian/install must contain the list of scripts to install
 # as well as the target directory
-echo usr/bin/$SOURCEBIN usr/bin > debian/install 
+echo usr/bin/$SOURCEBIN usr/bin > debian/install
 echo etc/xdg/svirfneblin/rc.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/theme.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/theme-large.lua etc/xdg/svirfneblin >> debian/install
@@ -50,7 +51,7 @@ echo usr/share/doc/$DEBFOLDER/$SOURCEDOC usr/share/doc/$DEBFOLDER >> debian/inst
 echo "Source: $DEBFOLDER
 Section: unknown
 Priority: optional
-Maintainer: cmotc <cmotc@openmailbox.org>
+Maintainer: idk <eyedeekay@i2pmail.org>
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.5
 Homepage: https://www.github.com/svirfneblin-panel
@@ -59,12 +60,12 @@ Homepage: https://www.github.com/svirfneblin-panel
 
 Package: $DEBFOLDER
 Architecture: all
-Depends: awesome (>= 3.4), svirfneblin-battery-widget, svirfneblin-network-manager, \${misc:Depends}
+Depends: awesome (>= 3.4), \${misc:Depends}
 Description: A Gnome3-Like configuration for Awesome WM
- I like Gnome3's appearance, but I want tiling and I hate ShellShape, 
- and I don't think I really need  all these graphical configuration 
+ I like Gnome3's appearance, but I want tiling and I hate ShellShape,
+ and I don't think I really need  all these graphical configuration
  tools, and I really don't think I need any more javascript in my life
- than absolutely necessary. Seriously guy's, this is getting out of 
+ than absolutely necessary. Seriously guy's, this is getting out of
  hand. Maybe it's not my place, but I'm just sayin'. Well technically
  not just sayin'. I'm doin', as in re-implementing this stuff I like
  about Gnome in a language that doesn't make me seasick to look at.

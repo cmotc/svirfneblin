@@ -42,7 +42,7 @@ echo usr/bin/$SOURCEBIN usr/bin > debian/install
 echo etc/xdg/svirfneblin/rc.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/theme.lua etc/xdg/svirfneblin >> debian/install
 echo etc/xdg/svirfneblin/theme-large.lua etc/xdg/svirfneblin >> debian/install
-echo etc/xdg/svirfneblin/debian/menu.lua etc/xdg/svirfneblin/debian/ >> debian/install
+echo etc/xdg/svirfneblin/background.png etc/xdg/svirfneblin >> debian/install
 for f in usr/share/svirfneblin/icons/* ; do
     echo $f usr/share/svirfneblin/icons >> debian/install
 done
